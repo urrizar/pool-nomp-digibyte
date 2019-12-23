@@ -1,6 +1,6 @@
 <style>
     #boxWelcome{
-        background-color: #0eafc7;
+        background-color: #000000;
         color: white;
         margin: 18px;
     }
@@ -41,10 +41,10 @@
 
 
     #boxStatsLeft{
-        background-color: #b064e1;
+        background-color: #000000;
     }
     #boxStatsRight{
-        background-color: #10bb9c;
+        background-color: #000000;
     }
     .boxStats{
         color: white;
@@ -69,59 +69,137 @@
     .boxStatsList > div > div{
         padding: 3px;
     }
+    .menu {
+        background-color: #000000;
+        margin: 20px 0 0 20px;
+    }
+    .marginn {
+        padding: 5px 0 5px 0;
+        margin: 0 5px 0 5px;
+    }
+    .marginn_2 {
+        padding: 5px 0 0 0;
+        margin: 0 5px 0 5px;
+    }
+    .buttonn_2 {
+        background-color: #000000;
+        border: 1px solid white;
+        width: 98%;
+        color: white;
+    }
+    .buttonn_3 {
+        color: red;
+    }
 
+    .menu_2 {
+        background-color: #000000;
+        margin: 20px 20px 0 0;
+    }
 
 </style>
 
-
-<div class="pure-g-r" id="boxWelcome">
-    <div class="pure-u-1-3">
-        <img id="logoImg" src="/static/logo.svg">
-    </div>
-    <div class="pure-u-2-3">
-        <div id="welcomeText">Welcome to the future of mining</div>
-        <ul id="welcomeItems">
-            <li>Low fees</li>
-            <li>High performance Node.js backend</li>
-            <li>User friendly mining client</li>
-            <li>Multi-coin / multi-pool</li>
-        </ul>
-    </div>
-</div>
-
-<div class="pure-g-r" id="boxesLower">
-
-    <div class="pure-u-1-2">
-        <div class="boxStats" id="boxStatsLeft">
-            <div class="boxLowerHeader">Global Stats</div>
-            <div class="boxStatsList">
-                {{ for(var algo in it.stats.algos) { }}
-                <div>
-                    <div><i class="fa fa-flask"></i>{{=algo}}</div>
-                    <div><i class="fa fa-users"></i><span id="statsMiners{{=algo}}">{{=it.stats.algos[algo].workers}}</span> Miners</div>
-                    <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=algo}}">{{=it.stats.algos[algo].hashrateString}}</span></div>
+<table style="height: 100%;">
+    <tr>
+        <td valign="top" >
+            <table style="height: 94%;" class="menu">
+                <tr>
+                    <td valign="top" class="marginn" align="center">
+                        <form name="getWallet" class="pure-form pure-form-stacked marginn" method="get" action="https://www.digibyte.io/digibyte-wallet-downloads">
+                            <fieldset>
+                                <input type="hidden" value="1">
+                                <button type="submit" class="pure-button buttonn_2">get wallet<br>
+                                    <span class="buttonn_3">得到錢包</span></button>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="bottom" class="marginn" align="center">
+                        <form name="exchangeDGB" class="pure-form pure-form-stacked marginn_2" method="get" action="http://ceo-24.xyz/">
+                            <fieldset>
+                                <input type="hidden" value="1">
+                                <button type="submit" class="pure-button buttonn_2">exchange DGB<br>
+                                    <span class="buttonn_3">交換 DGB</span></button>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <div class="pure-g-r" id="boxWelcome">
+                <div class="pure-u-2-3">
+                    <div id="welcomeText"><span class="buttonn_3">感觉到变革之风的人不应该建造防风罩，而应该建造风车</span></div>
+                    <ul id="welcomeItems">
+                        <li>Low fees</li>
+                        <li>High performance Node.js backend</li>
+                        <li>User friendly mining client</li>
+                        <li>Multi-coin / multi-pool</li>
+                    </ul>
                 </div>
-                {{ } }}
             </div>
-        </div>
-    </div>
 
-    <div class="pure-u-1-2">
-        <div class="boxStats" id="boxStatsRight">
-            <div class="boxLowerHeader">Pools / Coins</div>
-            <div class="boxStatsList">
-                {{ for(var pool in it.stats.pools) { }}
-                <div>
-                    <div><i class="fa fa-dot-circle-o"></i>{{=pool}}</div>
-                    <div><i class="fa fa-users"></i><span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Miners</div>
-                    <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span></div>
+            <div class="pure-g-r" id="boxesLower">
+
+                <div class="pure-u-1-2">
+                    <div class="boxStats" id="boxStatsLeft">
+                        <div class="boxLowerHeader">Global Stats</div>
+                        <div class="boxStatsList">
+                            {{ for(var algo in it.stats.algos) { }}
+                            <div>
+                                <div><i class="fa fa-flask"></i>{{=algo}}</div>
+                                <div><i class="fa fa-users"></i><span id="statsMiners{{=algo}}">{{=it.stats.algos[algo].workers}}</span> Miners</div>
+                                <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=algo}}">{{=it.stats.algos[algo].hashrateString}}</span></div>
+                            </div>
+                            {{ } }}
+                        </div>
+                    </div>
                 </div>
-                {{ } }}
-            </div>
-        </div>
-    </div>
 
-</div>
+                <div class="pure-u-1-2">
+                    <div class="boxStats" id="boxStatsRight">
+                        <div class="boxLowerHeader">Pools / Coins</div>
+                        <div class="boxStatsList">
+                            {{ for(var pool in it.stats.pools) { }}
+                            <div>
+                                <div><i class="fa fa-dot-circle-o"></i>{{=pool}}</div>
+                                <div><i class="fa fa-users"></i><span id="statsMiners{{=pool}}">{{=it.stats.pools[pool].workerCount}}</span> Miners</div>
+                                <div><i class="fa fa-tachometer"></i><span id="statsHashrate{{=pool}}">{{=it.stats.pools[pool].hashrateString}}</span></div>
+                            </div>
+                            {{ } }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </td>
+        <td valign="top" >
+            <table style="height: 94%;" class="menu_2">
+                <tr>
+                    <td valign="top" class="marginn" align="center">
+                        <form name="getWallet" class="pure-form pure-form-stacked marginn" method="get" action="http://maodgb256.xyz:8080/getting_started">
+                            <fieldset>
+                                <input type="hidden" value="1">
+                                <button type="submit" class="pure-button buttonn_2">switch pool<br>
+                                    <span class="buttonn_3">切換池</span></button>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="bottom" class="marginn" align="center">
+                        <form name="exchangeDGB" class="pure-form pure-form-stacked marginn_2" method="get" action="http://maodgb256.xyz:5025">
+                            <fieldset>
+                                <input type="hidden" value="1">
+                                <button type="submit" class="pure-button buttonn_2">p2pool</button>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
 <script>
     $(function() {

@@ -1,0 +1,109 @@
+{
+    "enabled": false,
+    "coin": "digibyte_sha256.json",
+
+    "address": "address",
+
+    "rewardRecipients": {
+        "address": 1.5
+    },
+
+    "paymentProcessing": {
+        "enabled": true,
+        "paymentInterval": 20,
+        "minimumPayment": 1,
+        "daemon": {
+            "host": "127.0.0.1",
+            "port": 15024,
+            "user": "user",
+            "password": "password"
+        }
+    },
+
+    "ports": {
+        "4612": {
+            "diff": 500000
+        },
+        "4618": {
+            "diff": 608000
+        },
+        "4624": {
+            "diff": 716000
+        },
+        "4630": {
+            "diff": 824000
+        },
+        "4636": {
+            "diff": 932000
+        },
+        "4642": {
+            "diff": 1040000
+        },
+        "4648": {
+            "diff": 1148000
+        },
+        "4654": {
+            "diff": 1256000
+        },
+        "4660": {
+            "diff": 1364000
+        },
+        "4666": {
+            "diff": 1472000
+        },
+        "4672": {
+            "diff": 1580000
+        },
+        "4678": {
+            "diff": 1688000
+        },
+        "4684": {
+            "diff": 1796000
+        },
+        "4690": {
+            "diff": 1904000
+        },
+        "4696": {
+            "diff": 2012000
+        },
+        "4702": {
+            "diff": 2120000
+        },
+        "4708": {
+            "diff": 2228000
+        },
+        "4714": {
+            "diff": 2336000
+        },
+        "4720": {
+            "diff": 2444000
+        },
+        "4726": {
+            "diff": 2552000
+        },
+        "4732": {
+            "diff": 2660000
+        }
+    },
+
+    "daemons": [
+        {
+            "host": "127.0.0.1",
+            "port": 15024,
+            "user": "user",
+            "password": "password"
+        }
+    ],
+
+    "mposMode": {
+        "enabled": false,
+        "host": "127.0.0.1",
+        "port": 3306,
+        "user": "nomp",
+        "password": "password",
+        "database": "nomp",
+        "checkPassword": true,
+        "autoCreateWorker": false
+    }
+
+}

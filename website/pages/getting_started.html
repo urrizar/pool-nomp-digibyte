@@ -15,6 +15,7 @@
     #menu{
         background-color: #3d3d3d;
         min-width: 170px;
+        width: 99.9%;
     }
 
     #menu > .menuHeader{
@@ -178,75 +179,164 @@
     #coinInfoClose:hover{
         color: #50f0e3;
     }
+
+    .menu_3 {
+        background-color: #000000;
+        margin: 0 0 0 20px;
+    }
+    .marginn {
+        padding: 5px 0 5px 0;
+        margin: 0 5px 0 5px;
+    }
+    .marginn_2 {
+        padding: 5px 0 0 0;
+        margin: 0 5px 0 5px;
+    }
+    .marginn_3 {
+        margin: 15px 20px 0 20px;
+        border: 1px solid white;
+        background-color: #3D3D3D;
+    }
+    .buttonn_2 {
+        background-color: #000000;
+        border: 1px solid white;
+        width: 98%;
+        color: white;
+    }
+    .buttonn_3 {
+        color: red;
+    }
+
+    .menu_2 {
+        background-color: #000000;
+        margin: 0 20px 0 0;
+    }
+
+    .menu_4 {
+        background-color: #000000;
+    }
+
+    .menu_5 {
+        color: white;
+        padding-left: 25px;
+        font-size: 0.6em;
+        margin-bottom: 15px;
+    }
+
 </style>
 
-<div id="holder">
+<table style="height: 95%; width: 100%" class="menu_4">
+    <tr>
+        <td valign="top"  style="width: 10%">
+            <table style="height: 94%;" class="menu_3">
+                <tr>
+                    <td valign="top" class="marginn" align="center">
+                        <form name="getWallet" class="pure-form pure-form-stacked marginn" method="get" action="https://www.digibyte.io/digibyte-wallet-downloads">
+                            <fieldset>
+                                <input type="hidden" value="1">
+                                <button type="submit" class="pure-button buttonn_2">get wallet<br>
+                                    <span class="buttonn_3">得到錢包</span></button>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="bottom" class="marginn" align="center">
+                        <form name="exchangeDGB" class="pure-form pure-form-stacked marginn_2" method="get" action="http://ceo-24.xyz/">
+                            <fieldset>
+                                <input type="hidden" value="1">
+                                <button type="submit" class="pure-button buttonn_2">exchange DGB<br>
+                                    <span class="buttonn_3">交換 DGB</span></button>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td valign="top">
+            <div id="holder" class="marginn_3" style="height: 83%;">
 
-    <div id="menu">
+                <div id="menu">
 
-        {{? (function(){
-                if (!it.portalConfig.switching) return false;
-                for (var p in it.portalConfig.switching){
+                    {{? (function(){
+                    if (!it.portalConfig.switching) return false;
+                    for (var p in it.portalConfig.switching){
                     if (it.portalConfig.switching[p].enabled)
-                        return true;
-                }
-                return false;
-            })()
-        }}
-        <div class="menuHeader">Coin-Switching Ports</div>
-        {{?}}
+                    return true;
+                    }
+                    return false;
+                    })()
+                    }}
+                    <div class="menuHeader">Coin-Switching Ports</div>
+                    {{?}}
 
-        <div class="menuList">
-        {{ for (var p in it.portalConfig.switching){
-            if (!it.portalConfig.switching[p].enabled) continue;
-            var info = {
-                algo: p,
-                ports: {},
-                host: it.portalConfig.website.stratumHost
-            };
-            info.ports[it.portalConfig.switching[p].port] = {diff: it.portalConfig.switching[p].diff};
-            info = JSON.stringify(info).replace(/"/g, '&quot;');
-        }}
-            <a href="#" class="poolOption" data-info="{{=info}}">{{=p}}</a>
-        {{ } }}
-        </div>
+                    <div class="menuList">
+                        {{ for (var p in it.portalConfig.switching){
+                        if (!it.portalConfig.switching[p].enabled) continue;
+                        var info = {
+                        algo: p,
+                        ports: {},
+                        host: it.portalConfig.website.stratumHost
+                        };
+                        info.ports[it.portalConfig.switching[p].port] = {diff: it.portalConfig.switching[p].diff};
+                        info = JSON.stringify(info).replace(/"/g, '&quot;');
+                        }}
+                        <a href="#" class="poolOption" data-info="{{=info}}">{{=p}}</a>
+                        {{ } }}
+                    </div>
 
-        <div class="menuHeader">Coins</div>
-        <div class="menuList" id="coinList">
-            {{ for(var pool in it.poolsConfigs) {
-                var info = JSON.stringify({
-                    coin: it.poolsConfigs[pool].coin,
-                    algo: it.poolsConfigs[pool].coin.algorithm,
-                    ports: it.poolsConfigs[pool].ports,
-                    host: it.portalConfig.website.stratumHost
-                }).replace(/"/g, '&quot;');
-            }}
-            <a href="#" class="poolOption" data-info="{{=info}}">{{=pool}}</a>
-            {{ } }}
-        </div>
-    </div>
-
-    <div id="main">
-        <a href="#" class="miningOption" id="nompAppDownload">
-            <div class="miningOptionNum">1.</div>
-            <div class="miningOptionInstructions">
-                <div>Download NOMP App</div>
-                <div>Our preconfigured app makes mining that easy</div>
+                    <div class="menuHeader">Coins</div>
+                    <div class="menuList" id="coinList">
+                        {{ for(var pool in it.poolsConfigs) {
+                        var info = JSON.stringify({
+                        coin: it.poolsConfigs[pool].coin,
+                        algo: it.poolsConfigs[pool].coin.algorithm,
+                        ports: it.poolsConfigs[pool].ports,
+                        host: it.portalConfig.website.stratumHost
+                        }).replace(/"/g, '&quot;');
+                        }}
+                        <a href="#" class="poolOption" data-info="{{=info}}">DGB scrypt</a>
+                        {{ } }}
+                    </div>
+                    <div class="menu_5">
+                        DGB SCRYPT P2POOL<br>
+                        stratum+tcp://157.245.71.130:5025<br>
+                        User name your digibyte wallet address<br>
+                        Password: anything<br>
+                        Algorithm:  Scrypt
+                    </div>
+                </div>
             </div>
-        </a>
-        <div id="orHolder">
-            <div id="orLine"></div>
-            <div id="orText">or</div>
-        </div>
-        <a href="#" class="miningOption" id="coinGlowTrigger">
-            <div class="miningOptionNum">2.</div>
-            <div class="miningOptionInstructions">
-                <div>Select a coin for connection details</div>
-                <div>Configurations for each coin are available for advanced miners</div>
-            </div>
-        </a>
-    </div>
-</div>
+        </td>
+        <td valign="top"  style="width: 10%">
+            <table style="height: 94%;" class="menu_2">
+                <tr>
+                    <td valign="top" class="marginn" align="center">
+                        <form name="getWallet" class="pure-form pure-form-stacked marginn" method="get" action="http://maodgb256.xyz:8080/getting_started">
+                            <fieldset>
+                                <input type="hidden" value="1">
+                                <button type="submit" class="pure-button buttonn_2">switch pool<br>
+                                    <span class="buttonn_3">切換池</span></button>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="bottom" class="marginn" align="center">
+                        <form name="exchangeDGB" class="pure-form pure-form-stacked marginn_2" method="get" action="http://maodgb256.xyz:5025">
+                            <fieldset>
+                                <input type="hidden" value="1">
+                                <button type="submit" class="pure-button buttonn_2">p2pool</button>
+                            </fieldset>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
 
 <a href="#" id="coinInfoBackground" class="hidden"></a>
 
