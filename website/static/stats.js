@@ -1,10 +1,12 @@
 var poolWorkerData;
 var poolHashrateData;
 var poolBlockData;
+var poolDifficultyData;
 
 var poolWorkerChart;
 var poolHashrateChart;
 var poolBlockChart;
+var poolDifficultyChart;
 
 var statData;
 var poolKeys;
@@ -31,17 +33,20 @@ function buildChartData(){
             var a = pools[pName] = (pools[pName] || {
                 hashrate: [],
                 workers: [],
-                blocks: []
+                blocks: [],
+                difficulty: []
             });
             if (pName in statData[i].pools){
                 a.hashrate.push([time, statData[i].pools[pName].hashrate]);
                 a.workers.push([time, statData[i].pools[pName].workerCount]);
-                a.blocks.push([time, statData[i].pools[pName].blocks.pending])
+                a.blocks.push([time, statData[i].pools[pName].blocks.pending]);
+                a.difficulty.push([time, statData[i].pools[pName].difficulty]);
             }
             else{
                 a.hashrate.push([time, 0]);
                 a.workers.push([time, 0]);
-                a.blocks.push([time, 0])
+                a.blocks.push([time, 0]);
+                a.difficulty.push([time, 0]);
             }
 
         }
@@ -51,6 +56,7 @@ function buildChartData(){
     poolWorkerData = [];
     poolHashrateData = [];
     poolBlockData = [];
+    poolDifficultyData = [];
 
     for (var pool in pools){
         poolWorkerData.push({
@@ -64,18 +70,27 @@ function buildChartData(){
         poolBlockData.push({
             key: pool,
             values: pools[pool].blocks
-        })
+        });
+        poolDifficultyData.push({
+            key: pool,
+            values: pools[pool].difficulty
+        });
     }
 }
 
 function getReadableHashRateString(hashrate){
     var i = -1;
-    var byteUnits = [ ' KH', ' MH', ' GH', ' TH', ' PH' ];
-    do {
-        hashrate = hashrate / 1024;
-        i++;
-    } while (hashrate > 1024);
-    return Math.round(hashrate) + byteUnits[i];
+    if (hashrate < 1024) {
+        return Math.round(hashrate) + 'H';
+    }
+    else {
+        var byteUnits = [' KH', ' MH', ' GH', ' TH', ' PH'];
+        do {
+            hashrate = hashrate / 1024;
+            i++;
+        } while (hashrate > 1024);
+        return Math.round(hashrate) + byteUnits[i];
+    }
 }
 
 function timeOfDayFormat(timestamp){
@@ -136,12 +151,32 @@ function displayCharts(){
 
         return poolBlockChart;
     });
+
+
+    nv.addGraph(function() {
+        poolDifficultyChart = nv.models.lineChart()
+            .margin({left: 60, right: 40})
+            .x(function(d){ return d[0] })
+            .y(function(d){ return d[1] })
+            .useInteractiveGuideline(true);
+
+        poolDifficultyChart.xAxis.tickFormat(timeOfDayFormat);
+
+        poolDifficultyChart.yAxis.tickFormat(function(d){
+            return getReadableHashRateString(d);
+        });
+
+        d3.select('#poolDifficulty').datum(poolDifficultyData).call(poolDifficultyChart);
+
+        return poolDifficultyChart;
+    });
 }
 
 function TriggerChartUpdates(){
     poolWorkerChart.update();
     poolHashrateChart.update();
     poolBlockChart.update();
+    poolDifficultyChart.update();
 }
 
 nv.utils.windowResize(TriggerChartUpdates);
@@ -191,6 +226,13 @@ statsSource.addEventListener('message', function(e){
                 if (poolBlockData[i].key === pool) {
                     poolBlockData[i].values.shift();
                     poolBlockData[i].values.push([time, pool in stats.pools ? stats.pools[pool].blocks.pending : 0]);
+                    break;
+                }
+            }
+            for (var i = 0; i < poolDifficultyData.length; i++) {
+                if (poolDifficultyData[i].key === pool) {
+                    poolDifficultyData[i].values.shift();
+                    poolDifficultyData[i].values.push([time, pool in stats.pools ? stats.pools[pool].difficulty : 0]);
                     break;
                 }
             }

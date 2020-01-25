@@ -4,7 +4,7 @@
 
 
 # NOMP ![NOMP Logo](http://zone117x.github.io/node-open-mining-portal/logo.svg "NOMP Logo")
-#### Node Open Mining Portal (Modified for Digibyte coin)
+#### Node Open Mining Portal (Modified for Digibyte coin, added coin difficulty chart))
 
 This portal is an extremely efficient, highly scalable, all-in-one, easy to setup cryptocurrency mining pool written
 entirely in Node.js. It contains a stratum poolserver; reward/payment/share processor; and a (*not yet completed*)

@@ -7,9 +7,16 @@ var async = require('async');
 var os = require('os');
 
 var algos = require('stratum-pool/lib/algoProperties.js');
-
+var Stratum = require('stratum-pool');
+var difficultyCommands2 = [];
+var difficultyGlobal = 0;
 
 module.exports = function(logger, portalConfig, poolConfigs){
+    var coin = '';
+    Object.keys(poolConfigs).forEach(function(coin1) {
+        var poolOptions = poolConfigs[coin1];
+        coin = poolOptions.coin.name;
+    });
 
     var _this = this;
 
@@ -28,6 +35,8 @@ module.exports = function(logger, portalConfig, poolConfigs){
     gatherStatHistory();
 
     var canDoStats = true;
+    var connection = {};
+    var processingConfig = {};
 
     Object.keys(poolConfigs).forEach(function(coin){
 
@@ -48,6 +57,8 @@ module.exports = function(logger, portalConfig, poolConfigs){
             coins: [coin],
             client: redis.createClient(redisConfig.port, redisConfig.host)
         });
+        connection = redis.createClient(redisConfig.port, redisConfig.host);
+        processingConfig = poolConfig.paymentProcessing;
     });
 
 
@@ -88,14 +99,36 @@ module.exports = function(logger, portalConfig, poolConfigs){
             data.pools[pool] = {
                 hashrate: stats.pools[pool].hashrate,
                 workerCount: stats.pools[pool].workerCount,
-                blocks: stats.pools[pool].blocks
+                blocks: stats.pools[pool].blocks,
+                difficulty: stats.pools[pool].difficulty
             }
         }
         _this.statPoolHistory.push(data);
     }
 
 
-
+    var daemon = new Stratum.daemon.interface([processingConfig.daemon], function(severity, message){
+        logger[severity](logSystem, logComponent, message);
+    });
+    function functionCheckBalancies() {
+        var difficultyCommands = [];
+        var difficulty = 0;
+        daemon.cmd('getblockchaininfo', [], function(result) {
+            if (result.error){
+                logger.error('difficulty', 'difficulty', 'Error with processing daemon, getblockchaininfo failed ... ' + JSON.stringify(result.error));
+            }
+            else  {
+                if (result.response !== undefined) {
+                    if (result.response.difficulties !== undefined) {
+                        difficulty = result.response.difficulties.scrypt;
+                        difficultyGlobal = difficulty;
+                    }
+                }
+            }
+        }, true);
+        setTimeout(functionCheckBalancies, 10000);
+    }
+    setTimeout(functionCheckBalancies, 10000);
 
     this.getGlobalStats = function(callback){
 
@@ -151,7 +184,8 @@ module.exports = function(logger, portalConfig, poolConfigs){
                                 pending: replies[i + 3],
                                 confirmed: replies[i + 4],
                                 orphaned: replies[i + 5]
-                            }
+                            },
+                            difficulty: difficultyGlobal
                         };
                         allCoinStats[coinStats.name] = (coinStats);
                     }

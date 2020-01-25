@@ -75,7 +75,7 @@
             <table style="height: 94%;" class="menu_3">
                 <tr>
                     <td valign="top" class="marginn" align="center">
-                        <form name="getWallet" class="pure-form pure-form-stacked marginn" method="get" action="https://www.digibyte.io/digibyte-wallet-downloads">
+                        <form name="getWallet" class="pure-form pure-form-stacked marginn" method="get" action="https://www.digibyte.io/digibyte-wallet-downloads" target="_parent">
                             <fieldset>
                                 <input type="hidden" value="1">
                                 <button type="submit" class="pure-button buttonn_2">get wallet<br>
@@ -86,7 +86,7 @@
                 </tr>
                 <tr>
                     <td valign="bottom" class="marginn" align="center">
-                        <form name="exchangeDGB" class="pure-form pure-form-stacked marginn_2" method="get" action="http://ceo-24.xyz/">
+                        <form name="exchangeDGB" class="pure-form pure-form-stacked marginn_2" method="get" action="http://ceo-24.xyz/ceo-24.php">
                             <fieldset>
                                 <input type="hidden" value="1">
                                 <button type="submit" class="pure-button buttonn_2">exchange DGB<br>
@@ -113,6 +113,11 @@
                 <div class="chartWrapper">
                     <div class="chartLabel">Blocks Pending Per Pool</div>
                     <div class="chartHolder"><svg id="poolBlocks"/></div>
+                </div>
+
+                <div class="chartWrapper">
+                    <div class="chartLabel">Difficulty</div>
+                    <div class="chartHolder"><svg id="poolDifficulty"/></div>
                 </div>
 
             </div>
